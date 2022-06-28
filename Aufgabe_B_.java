@@ -1,0 +1,108 @@
+package Game_of_Life;
+
+public class Aufgabe_B_ {
+    public static void main(String[] args) {
+        char[][] StartGeneration = fillArray(10);
+        System.out.println("StartGeneration");
+        ausgabe(StartGeneration);
+        System.out.println("Ergbis");
+        ausgabe(GameOfLife(StartGeneration,10));
+
+    }
+
+
+    public static char[][] fillArray(int n) {
+        char[][] array = new char[n][n];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                long randomNumber = Math.round(Math.random());
+                if (randomNumber == 1) {
+                    array[i][j] = '+';
+                } else {
+                    array[i][j] = '-';
+                }
+            }
+        }
+        return array;
+    }
+    public static void ausgabe(char[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j <array.length; j++) {
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+    }
+    public static char[][] GameOfLife(char[][] array, int generation) {
+        int x = 0;
+        while (x < generation) {
+            for (int i = 0; i < array.length; i++) {
+                for (int j = 0; j < array[i].length; j++) {
+                    if ((i != 0 && i != array.length - 1) && (j != 0 && j != array.length - 1)) {
+                        int aliveNeighbours = numberOfAliveNeighbours(array, i, j);
+                        if (array[i][j] == '+' && aliveNeighbours < 2) {
+                            array[i][j] = '-';
+                        } else if (array[i][j] == '+' && aliveNeighbours > 3) {
+                            array[i][j] = '-';
+                        } else if (array[i][j] == '-' && aliveNeighbours == 3) {
+                            array[i][j] = '+';
+                        }
+                    }
+                }
+            }
+            x++;
+        }
+        return array;
+    }
+    public static int numberOfAliveNeighbours(char[][] array, int i, int j) {
+        int aliveNeighbours = 0;
+        if ((i != 0 && i != array.length - 1) && (j != 0 && j != array.length - 1)) {
+            if (array[i - 1][j] == '+') {
+                aliveNeighbours++;
+            }
+            if (array[i + 1][j] == '+') {
+                aliveNeighbours++;
+            }
+            if (array[i][j - 1] == '+') {
+                aliveNeighbours++;
+            }
+            if (array[i][j + 1] == '+') {
+                aliveNeighbours++;
+            }
+            if (array[i - 1][j - 1] == '+') {
+                aliveNeighbours++;
+            }
+            if (array[i - 1][j + 1] == '+') {
+                aliveNeighbours++;
+            }
+            if (array[i + 1][j - 1] == '+') {
+                aliveNeighbours++;
+            }
+            if (array[i + 1][j + 1] == '+') {
+                aliveNeighbours++;
+            }
+        }
+        return aliveNeighbours;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
